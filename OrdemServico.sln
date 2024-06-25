@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34928.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrdemServico.Api", "OrdemServico.Api\OrdemServico.Api.csproj", "{3D3EABB9-23E1-4ED1-BFB1-AD859CD81813}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3F3E9C11-65D8-4895-A253-018AA6A1C970} = {3F3E9C11-65D8-4895-A253-018AA6A1C970}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrdemServico.Models", "OrdemServico.Models\OrdemServico.Models.csproj", "{3F3E9C11-65D8-4895-A253-018AA6A1C970}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3D3EABB9-23E1-4ED1-BFB1-AD859CD81813}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D3EABB9-23E1-4ED1-BFB1-AD859CD81813}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D3EABB9-23E1-4ED1-BFB1-AD859CD81813}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D3EABB9-23E1-4ED1-BFB1-AD859CD81813}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F3E9C11-65D8-4895-A253-018AA6A1C970}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F3E9C11-65D8-4895-A253-018AA6A1C970}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F3E9C11-65D8-4895-A253-018AA6A1C970}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F3E9C11-65D8-4895-A253-018AA6A1C970}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2708D0F9-931F-4E20-87E9-706EE3316A50}
+	EndGlobalSection
+EndGlobal

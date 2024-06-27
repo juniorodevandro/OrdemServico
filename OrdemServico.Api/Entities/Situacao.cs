@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 
 namespace OrdemServico.Api.Entities
 {
@@ -10,7 +9,6 @@ namespace OrdemServico.Api.Entities
         [Key]
         public int Id { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required(ErrorMessage = "O campo 'Código' é obrigatório")]
         public int Codigo { get; set; }
 
@@ -21,18 +19,12 @@ namespace OrdemServico.Api.Entities
 
         public string? Observacao { get; set; }
 
-
-        [JsonIgnore]
-        public ICollection<ServicoOrdem> ServicoOrdem { get; set; } = [];
-
-        [JsonIgnore]
         public ICollection<Ordem> Ordem { get; set; } = [];
 
-        [JsonIgnore]
-        public ICollection<Produto> Produto { get; set; } = [];        
-        
-        [JsonIgnore]
+        public ICollection<ServicoOrdem> ServicoOrdem { get; set; } = [];
+
         public ICollection<Pessoa> Pessoa { get; set; } = [];
 
+        public ICollection<Produto> Produto { get; set; } = [];
     }
 }

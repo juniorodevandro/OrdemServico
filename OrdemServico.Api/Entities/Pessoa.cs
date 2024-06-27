@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -10,7 +11,6 @@ namespace OrdemServico.Api.Entities
         [Key]
         public int Id { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required(ErrorMessage = "O campo 'Código' é obrigatório")]
         public int Codigo { get; set; }
 
@@ -26,13 +26,13 @@ namespace OrdemServico.Api.Entities
         [Required(ErrorMessage = "O campo 'Tipo' é obrigatório")]
         public int TipoId { get; set; }
 
-        [ForeignKey("TipoId")]
+        [DeleteBehavior(DeleteBehavior.NoAction)]
         public required TipoPessoa Tipo { get; set; }
 
         [Required(ErrorMessage = "O campo 'Situação' é obrigatório")]
         public int SituacaoId { get; set; }
 
-        [ForeignKey("SituacaoId")]
+        [DeleteBehavior(DeleteBehavior.NoAction)]
         public required Situacao Situacao { get; set; }
 
         [JsonIgnore]

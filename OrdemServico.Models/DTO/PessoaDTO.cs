@@ -1,8 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
-
-namespace OrdemServico.Models.DTO
+﻿namespace OrdemServico.Models.DTO
 {
     public class PessoaDTO
     {

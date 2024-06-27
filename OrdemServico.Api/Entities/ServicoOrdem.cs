@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -16,13 +17,13 @@ namespace OrdemServico.Api.Entities
         [Required(ErrorMessage = "O campo 'Produto' é obrigatório")]
         public int ProdutoId { get; set; }
 
-        [ForeignKey("ProdutoId")]
+        [DeleteBehavior(DeleteBehavior.NoAction)]
         public required Produto Produto { get; set; }
   
         [Required(ErrorMessage = "O campo 'Ordem de serviço' é obrigatório")]
         public int OrdemId { get; set; }
 
-        [ForeignKey("OrdemId")]
+        [DeleteBehavior(DeleteBehavior.NoAction)]
         public required Ordem Ordem { get; set; }
 
         [Required(ErrorMessage = "O campo 'Quantidade' é obrigatório")]
@@ -40,7 +41,7 @@ namespace OrdemServico.Api.Entities
         [Required(ErrorMessage = "O campo 'Situação' é obrigatório")]
         public int SituacaoId { get; set; }
 
-        [ForeignKey("SituacaoId")]
+        [DeleteBehavior(DeleteBehavior.NoAction)]
         public required Situacao Situacao { get; set; }
     }
 }

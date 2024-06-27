@@ -10,7 +10,6 @@ namespace OrdemServico.Api.Entities
         [Key]
         public int Id { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required(ErrorMessage = "O campo 'Código' é obrigatório")]
         public int Codigo { get; set; }
 

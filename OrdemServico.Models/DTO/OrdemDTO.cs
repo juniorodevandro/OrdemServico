@@ -1,8 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
-
-namespace OrdemServico.Models.DTO
+﻿namespace OrdemServico.Models.DTO
 {
     public class OrdemDTO
     {      
@@ -19,6 +15,8 @@ namespace OrdemServico.Models.DTO
         public int? Desconto { get; set; }
 
         public string? Observacao { get; set; }
+
+        public string? NumeroControle { get; set; }
 
         public int TipoId { get; set; }
         public required string TipoNome { get; set; }

@@ -19,7 +19,7 @@ builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(connectionString
 
 // MAPPERS
 builder.Services.AddAutoMapper(typeof(BaseMapper),
-                              typeof(PassoaMapper),
+                              typeof(PessoaMapper),
                               typeof(OrdemMapper),
                               typeof(ServicoOrdemMapper),
                               typeof(ProdutoMapper));

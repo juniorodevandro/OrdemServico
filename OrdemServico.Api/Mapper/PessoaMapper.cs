@@ -4,9 +4,9 @@ using OrdemServico.Models.DTO;
 
 namespace OrdemServico.Api
 {
-    public class PassoaMapper : BaseMapper
+    public class PessoaMapper : BaseMapper
     {
-        public PassoaMapper()
+        public PessoaMapper()
         {
             CreateMap<Pessoa, PessoaDTO>()
                 .ForMember(dest => dest.TipoNome, opt => opt.MapFrom(src => src.Tipo.Nome))
@@ -21,8 +21,12 @@ namespace OrdemServico.Api
                 .ForMember(dest => dest.TipoNome, opt => opt.MapFrom(src => src.TipoNome));
 
             CreateMap<PessoaPostDTO, PessoaGetDTO>()
-            .ForMember(dest => dest.TipoNome, opt => opt.MapFrom(src => src.TipoNome))
-            .ForMember(dest => dest.SituacaoNome, opt => opt.Ignore());
+                .ForMember(dest => dest.TipoNome, opt => opt.MapFrom(src => src.TipoNome))
+                .ForMember(dest => dest.SituacaoNome, opt => opt.Ignore());
+
+            CreateMap<PessoaPutDTO, PessoaPostDTO>()
+                .ReverseMap();
+
         }
     }
 }

@@ -68,6 +68,14 @@ namespace OrdemServico.Api.Repository
                 throw new ArgumentException("Situação padrão para cadastro de registro não foi encontrada.");
             }
 
+            var pessoaExistente = await _context.Pessoa.FirstOrDefaultAsync(p => p.CpfCnpj == pessoa.CpfCnpj);
+
+            if (pessoaExistente != null)
+            {
+                // Se encontrar, lança uma exceção informando a duplicidade
+                throw new ArgumentException($"Já existe uma pessoa cadastrada com essa identificação: {pessoa.CpfCnpj}.");
+            }
+
             // Gera um código novo com base no último cadastrado no banco
             var ultimoCodigo = await _context.Pessoa.MaxAsync(p => (int?)p.Codigo) ?? 0;
             var novoCodigo = ultimoCodigo + 1;
@@ -88,6 +96,58 @@ namespace OrdemServico.Api.Repository
             await _context.SaveChangesAsync();
 
             return novaPessoa;
+        }
+
+        public async Task<bool> RemoverPessoa(int? codigo = null, string? cpfCnpj = null)
+        {
+            var query = _context.Pessoa.AsQueryable();
+
+            // Aqui pra baixo vai tentar filtra conforme os parâmetros passados
+            if (codigo.HasValue)
+            {
+                query = query.Where(p => p.Codigo == codigo);
+            }
+
+            if (!string.IsNullOrEmpty(cpfCnpj))
+            {
+                query = query.Where(p => p.CpfCnpj == cpfCnpj);
+            }
+
+            if (query == null)
+            {
+                throw new ArgumentException("Pessoa não encontrada.");
+            }
+
+            // Obtém a primeira pessoa encontrada na query, se houver
+            var pessoa = await query.FirstOrDefaultAsync();
+
+            if (pessoa == null)
+            {
+                throw new ArgumentException("Pessoa não encontrada.");
+            }
+
+            _context.Pessoa.Remove(pessoa);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> AlterarPessoa(int? codigo, string? cpfCnpj, PessoaPutDTO pessoa)
+        {
+            var pessoaExistente = await _context.Pessoa.FirstOrDefaultAsync(p => p.Codigo == codigo || p.CpfCnpj == cpfCnpj);
+
+            if (pessoaExistente == null)
+            {
+                throw new ArgumentException("Pessoa não encontrada.");
+            }
+
+            pessoaExistente.Nome = pessoa.Nome;
+            pessoaExistente.Contato = pessoa.Contato;
+
+            _context.Pessoa.Update(pessoaExistente);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }

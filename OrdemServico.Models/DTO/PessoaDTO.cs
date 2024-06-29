@@ -1,4 +1,7 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+using System.Xml.Linq;
 
 namespace OrdemServico.Models.DTO
 {
@@ -46,5 +49,12 @@ namespace OrdemServico.Models.DTO
 
         [JsonPropertyName("tipo")]
         public required string TipoNome { get; set; }
+    }
+
+    public class PessoaPutDTO
+    {
+        public required string Nome { get; set; }
+
+        public string? Contato { get; set; }
     }
 }

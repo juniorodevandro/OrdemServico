@@ -6,6 +6,7 @@ using System.Text.Json.Serialization;
 namespace OrdemServico.Api.Entities
 {
     [Table("Ordem")]
+    [Index(nameof(Codigo), IsUnique = true)]
     public class Ordem
     {
         [Key]
@@ -49,7 +50,6 @@ namespace OrdemServico.Api.Entities
         [DeleteBehavior(DeleteBehavior.NoAction)]
         public required Situacao Situacao { get; set; }
 
-        [JsonIgnore]
         public ICollection<ServicoOrdem> ServicoOrdem { get; set; } = [];
     }
 }

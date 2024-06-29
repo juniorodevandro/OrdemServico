@@ -12,7 +12,7 @@ using OrdemServico.Data;
 namespace OrdemServico.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240626003409_create")]
+    [Migration("20240629182359_create")]
     partial class create
     {
         /// <inheritdoc />
@@ -32,6 +32,10 @@ namespace OrdemServico.Api.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClienteCpfCnpj")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("ClienteId")
                         .HasColumnType("int");
@@ -68,11 +72,14 @@ namespace OrdemServico.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClienteId");
+                    b.HasIndex("Codigo")
+                        .IsUnique();
 
                     b.HasIndex("SituacaoId");
 
                     b.HasIndex("TipoId");
+
+                    b.HasIndex("ClienteId", "ClienteCpfCnpj");
 
                     b.ToTable("Ordem");
                 });
@@ -80,19 +87,15 @@ namespace OrdemServico.Api.Migrations
             modelBuilder.Entity("OrdemServico.Api.Entities.Pessoa", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("CpfCnpj")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Codigo")
                         .HasColumnType("int");
 
                     b.Property<string>("Contato")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CpfCnpj")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
@@ -106,7 +109,10 @@ namespace OrdemServico.Api.Migrations
                     b.Property<int>("TipoId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id", "CpfCnpj");
+
+                    b.HasIndex("Codigo")
+                        .IsUnique();
 
                     b.HasIndex("SituacaoId");
 
@@ -140,6 +146,9 @@ namespace OrdemServico.Api.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Codigo")
+                        .IsUnique();
 
                     b.HasIndex("SituacaoId");
 
@@ -214,6 +223,9 @@ namespace OrdemServico.Api.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Codigo")
+                        .IsUnique();
+
                     b.ToTable("Situacao");
 
                     b.HasData(
@@ -270,6 +282,9 @@ namespace OrdemServico.Api.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Codigo")
+                        .IsUnique();
+
                     b.ToTable("TipoOrdem");
 
                     b.HasData(
@@ -313,6 +328,9 @@ namespace OrdemServico.Api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Codigo")
+                        .IsUnique();
 
                     b.ToTable("TipoPessoa");
 
@@ -358,6 +376,9 @@ namespace OrdemServico.Api.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Codigo")
+                        .IsUnique();
+
                     b.ToTable("TipoProduto");
 
                     b.HasData(
@@ -383,12 +404,6 @@ namespace OrdemServico.Api.Migrations
 
             modelBuilder.Entity("OrdemServico.Api.Entities.Ordem", b =>
                 {
-                    b.HasOne("OrdemServico.Api.Entities.Pessoa", "Cliente")
-                        .WithMany("Ordem")
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("OrdemServico.Api.Entities.Situacao", "Situacao")
                         .WithMany("Ordem")
                         .HasForeignKey("SituacaoId")
@@ -399,6 +414,12 @@ namespace OrdemServico.Api.Migrations
                         .WithMany("Ordem")
                         .HasForeignKey("TipoId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OrdemServico.Api.Entities.Pessoa", "Cliente")
+                        .WithMany("Ordem")
+                        .HasForeignKey("ClienteId", "ClienteCpfCnpj")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Cliente");

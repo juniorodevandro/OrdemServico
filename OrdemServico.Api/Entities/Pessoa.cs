@@ -6,6 +6,7 @@ using System.Text.Json.Serialization;
 namespace OrdemServico.Api.Entities
 {
     [Table("Pessoa")]
+    [Index(nameof(Codigo), IsUnique = true)]
     public class Pessoa
     {
         [Key]
@@ -19,6 +20,7 @@ namespace OrdemServico.Api.Entities
         public string? Nome { get; set; }
 
         [Required(ErrorMessage = "O campo 'CPF/CNPJ' é obrigatório")]
+        [RegularExpression(@"^(\d{3}\.\d{3}\.\d{3}-\d{2})|(\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2})$", ErrorMessage = "O CPF/CNPJ informado é inválido.")]
         public string? CpfCnpj { get; set; }
 
         public string? Contato { get; set; }
@@ -35,7 +37,6 @@ namespace OrdemServico.Api.Entities
         [DeleteBehavior(DeleteBehavior.NoAction)]
         public required Situacao Situacao { get; set; }
 
-        [JsonIgnore]
         public ICollection<Ordem> Ordem { get; set; } = [];
     }
 }

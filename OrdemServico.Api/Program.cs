@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using OrdemServico.Api;
 using OrdemServico.Api.DependencyInjection;
 using OrdemServico.Api.Mappings;
 using OrdemServico.Data;
@@ -17,7 +18,11 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultDbConne
 builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(connectionString));
 
 // MAPPERS
-builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddAutoMapper(typeof(BaseMapper),
+                              typeof(PassoaMapper),
+                              typeof(OrdemMapper),
+                              typeof(ServicoOrdemMapper),
+                              typeof(ProdutoMapper));
 
 // PUBLICAR REPOSITORIOS
 builder.Services.AddRepositories();

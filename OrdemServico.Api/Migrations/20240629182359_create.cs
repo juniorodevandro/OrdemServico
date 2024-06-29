@@ -78,18 +78,17 @@ namespace OrdemServico.Api.Migrations
                 name: "Pessoa",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    CpfCnpj = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Codigo = table.Column<int>(type: "int", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    CpfCnpj = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Contato = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TipoId = table.Column<int>(type: "int", nullable: false),
                     SituacaoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pessoa", x => x.Id);
+                    table.PrimaryKey("PK_Pessoa", x => new { x.Id, x.CpfCnpj });
                     table.ForeignKey(
                         name: "FK_Pessoa_Situacao_SituacaoId",
                         column: x => x.SituacaoId,
@@ -145,16 +144,17 @@ namespace OrdemServico.Api.Migrations
                     NumeroControle = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TipoId = table.Column<int>(type: "int", nullable: false),
                     ClienteId = table.Column<int>(type: "int", nullable: false),
+                    ClienteCpfCnpj = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     SituacaoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Ordem", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Ordem_Pessoa_ClienteId",
-                        column: x => x.ClienteId,
+                        name: "FK_Ordem_Pessoa_ClienteId_ClienteCpfCnpj",
+                        columns: x => new { x.ClienteId, x.ClienteCpfCnpj },
                         principalTable: "Pessoa",
-                        principalColumn: "Id");
+                        principalColumns: new[] { "Id", "CpfCnpj" });
                     table.ForeignKey(
                         name: "FK_Ordem_Situacao_SituacaoId",
                         column: x => x.SituacaoId,
@@ -246,9 +246,15 @@ namespace OrdemServico.Api.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ordem_ClienteId",
+                name: "IX_Ordem_ClienteId_ClienteCpfCnpj",
                 table: "Ordem",
-                column: "ClienteId");
+                columns: new[] { "ClienteId", "ClienteCpfCnpj" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ordem_Codigo",
+                table: "Ordem",
+                column: "Codigo",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ordem_SituacaoId",
@@ -261,6 +267,12 @@ namespace OrdemServico.Api.Migrations
                 column: "TipoId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Pessoa_Codigo",
+                table: "Pessoa",
+                column: "Codigo",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Pessoa_SituacaoId",
                 table: "Pessoa",
                 column: "SituacaoId");
@@ -269,6 +281,12 @@ namespace OrdemServico.Api.Migrations
                 name: "IX_Pessoa_TipoId",
                 table: "Pessoa",
                 column: "TipoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Produto_Codigo",
+                table: "Produto",
+                column: "Codigo",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Produto_SituacaoId",
@@ -294,6 +312,30 @@ namespace OrdemServico.Api.Migrations
                 name: "IX_ServicoOrdem_SituacaoId",
                 table: "ServicoOrdem",
                 column: "SituacaoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Situacao_Codigo",
+                table: "Situacao",
+                column: "Codigo",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TipoOrdem_Codigo",
+                table: "TipoOrdem",
+                column: "Codigo",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TipoPessoa_Codigo",
+                table: "TipoPessoa",
+                column: "Codigo",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TipoProduto_Codigo",
+                table: "TipoProduto",
+                column: "Codigo",
+                unique: true);
         }
 
         /// <inheritdoc />

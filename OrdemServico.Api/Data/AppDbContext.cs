@@ -20,12 +20,16 @@ namespace OrdemServico.Data
         public DbSet<TipoOrdem> TipoOrdem { get; set; }
         public DbSet<TipoPessoa> TipoPessoa { get; set; }
         public DbSet<TipoProduto> TipoProduto { get; set; }
+        public DbSet<Situacao> Situacao { get; set; }
 
 
         public DbSet<Ordem> Ordem { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {           
+            modelBuilder.Entity<Pessoa>()
+                .HasKey(p => new { p.Id, p.CpfCnpj });
+
             //-- CRIAR PELO MENOS UM REGISTRO EM CADA TABELA PADRÃO
             modelBuilder.Entity<TipoProduto>().HasData(new List<TipoProduto>
             {

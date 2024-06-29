@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OrdemServico.Api.Entities
 {
     [Table("Situacao")]
+    [Index(nameof(Codigo), IsUnique = true)]
     public class Situacao
     {
         [Key]

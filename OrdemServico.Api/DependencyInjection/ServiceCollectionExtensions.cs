@@ -7,8 +7,13 @@ namespace OrdemServico.Api.DependencyInjection
     {
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+
             services.AddScoped<IProduto, ProdutoRepository>();
-            services.AddScoped<IPessoa, PessoaRepository>();
+            services.AddScoped<IPessoaRepository, PessoaRepository>();
             services.AddScoped<IOrdem, OrdemRepository>();
             services.AddScoped<IServicoOrdem, ServicoOrdemRepository>();
 

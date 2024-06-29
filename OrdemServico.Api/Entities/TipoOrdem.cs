@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace OrdemServico.Api.Entities
 {
     [Table("TipoOrdem")]
+    [Index(nameof(Codigo), IsUnique = true)]
     public class TipoOrdem
     {
         [Key]
@@ -19,7 +21,6 @@ namespace OrdemServico.Api.Entities
 
         public string? Observacao { get; set; }
 
-        [JsonIgnore]
         public ICollection<Ordem> Ordem { get; set; } = [];
     }
 }

@@ -19,10 +19,10 @@ builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(connectionString
 
 // MAPPERS
 builder.Services.AddAutoMapper(typeof(BaseMapper),
-                              typeof(PessoaMapper),
-                              typeof(OrdemMapper),
-                              typeof(ServicoOrdemMapper),
-                              typeof(ProdutoMapper));
+                               typeof(PessoaMapper),
+                               typeof(OrdemMapper),
+                               typeof(ServicoOrdemMapper),
+                               typeof(ProdutoMapper));
 
 // PUBLICAR REPOSITORIOS
 builder.Services.AddRepositories();

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using OrdemServico.Api.DependencyInjection;
 using OrdemServico.Api.Mappings;
 using OrdemServico.Data;
 
@@ -17,6 +18,9 @@ builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(connectionString
 
 // MAPPERS
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+// PUBLICAR REPOSITORIOS
+builder.Services.AddRepositories();
 
 var app = builder.Build();
 

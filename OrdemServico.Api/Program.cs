@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 using OrdemServico.Api;
 using OrdemServico.Api.DependencyInjection;
 using OrdemServico.Api.Mappings;
@@ -29,6 +30,13 @@ builder.Services.AddRepositories();
 
 var app = builder.Build();
 
+// CORS
+app.UseCors(policy =>
+    policy.WithOrigins("https://localhost:7291", "http://localhost:5299")
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .WithHeaders(HeaderNames.ContentType)
+);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -16,7 +16,7 @@ namespace OrdemServico.Api
                 .ForMember(dest => dest.TipoNome, opt => opt.MapFrom(src => src.Tipo.Nome))
                 .ForMember(dest => dest.SituacaoNome, opt => opt.MapFrom(src => src.Situacao.Nome));
 
-            CreateMap<PessoaPostDTO, PessoaDTO>()
+            CreateMap<PessoaPostDTO, PessoaGetDTO>()
                 .ForMember(dest => dest.Codigo, opt => opt.Ignore())
                 .ForMember(dest => dest.TipoNome, opt => opt.MapFrom(src => src.TipoNome));
         }

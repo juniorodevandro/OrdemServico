@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using OrdemServico.Api.Interface;
 using OrdemServico.Models.DTO;
 

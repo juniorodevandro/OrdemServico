@@ -1,0 +1,30 @@
+﻿
+<BotaoPessoa />
+
+<MudTable Items="@Pessoas"
+          Hover="true"
+          FixedHeader="true"
+          Dense="true">
+    <HeaderContent>
+        <MudTh>Código</MudTh>
+        <MudTh>Nome</MudTh>
+        <MudTh>CPF/CNPJ</MudTh>
+        <MudTh>Contato</MudTh>
+        <MudTh>Tipo</MudTh>
+        <MudTh>Situação</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>@context.Codigo</MudTd>
+        <MudTd>@context.Nome</MudTd>
+        <MudTd>@context.CpfCnpj</MudTd>
+        <MudTd>@context.Contato</MudTd>
+        <MudTd>@context.TipoNome</MudTd>
+        <MudTd>@context.SituacaoNome</MudTd>
+    </RowTemplate>
+</MudTable>
+
+@code {
+
+    [Parameter]
+    public IEnumerable<PessoaGetDTO>? Pessoas { get; set; }
+}

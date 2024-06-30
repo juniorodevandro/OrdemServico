@@ -1,0 +1,13 @@
+﻿<MudIconButton Icon="@Icons.Material.Filled.Add" Edge="Edge.End" Color="Color.Success" Size="Size.Large" OnClick="AbrirModal" />
+<MudIconButton Icon="@Icons.Material.Filled.Edit" Edge="Edge.End" Color="Color.Warning" Size="Size.Large" />
+<MudIconButton Icon="@Icons.Material.Filled.Delete" Edge="Edge.End" Color="Color.Error" Size="Size.Large" />
+
+@code {
+    [Parameter]
+    public EventCallback<bool> MostrarModalChanged { get; set; }
+
+    private void AbrirModal()
+    {
+        MostrarModalChanged.InvokeAsync(true);
+    }
+}

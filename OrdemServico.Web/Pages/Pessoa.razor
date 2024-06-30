@@ -1,0 +1,50 @@
+﻿@page "/pessoa"
+@inject IPessoa _pessoa
+@inject TitleService TitleService
+@inject NavigationManager NavigationManager
+
+@if (Carregando)
+{
+    <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+        <MudProgressCircular Color="Color.Default"
+                             Indeterminate="true"
+                             Size="Size.Large"
+                             style="width: 100px; height: 100px;" />
+    </div>
+}
+else if (ErroAoCarregar)
+{
+    <MudAlert Severity="Severity.Error">@MensagemErro</MudAlert>
+}
+else
+{
+    <ExibirTabelaPessoa Pessoas="Pessoas" />
+}
+
+@code {
+
+    public IEnumerable<PessoaGetDTO>? Pessoas { get; set; } = new List<PessoaGetDTO>();
+    public string? MensagemErro { get; set; }
+    private bool Carregando { get; set; } = true;
+    private bool ErroAoCarregar { get; set; } = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        TitleService.Title = "Pessoas";
+        try
+        {
+            Pessoas = await _pessoa.GetPessoa();
+        }
+        catch (Exception ex)
+        {
+            MensagemErro = "Erro ao carregar as pessoas. " + Environment.NewLine +
+                           $"Erro: {ex.Message}";
+
+            ErroAoCarregar = true; 
+        }
+        finally
+        {
+            Carregando = false;
+        }
+    }
+}

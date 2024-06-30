@@ -24,10 +24,13 @@ namespace OrdemServico.Models.DTO
 
     public class PessoaGetDTO
     {
+        [JsonPropertyName("codigo")]
         public required int Codigo { get; set; }
 
+        [JsonPropertyName("nome")]
         public required string Nome { get; set; }
 
+        [JsonPropertyName("cpfCnpj")]
         public required string CpfCnpj { get; set; }
 
         public string? Contato { get; set; }

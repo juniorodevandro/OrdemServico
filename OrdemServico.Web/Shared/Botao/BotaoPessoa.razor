@@ -1,13 +1,30 @@
-﻿<MudIconButton Icon="@Icons.Material.Filled.Add" Edge="Edge.End" Color="Color.Success" Size="Size.Large" OnClick="AbrirModal" />
-<MudIconButton Icon="@Icons.Material.Filled.Edit" Edge="Edge.End" Color="Color.Warning" Size="Size.Large" />
+﻿@inject IDialogService DialogService
+@inject ISnackbar Snackbar
+
+<MudIconButton Icon="@Icons.Material.Filled.Add" Edge="Edge.End" Color="Color.Success" Size="Size.Large" />
+<MudIconButton Icon="@Icons.Material.Filled.Edit" Edge="Edge.End" Color="Color.Warning" Size="Size.Large" OnClick="@(() => EditPessoa(mudTable))" />
 <MudIconButton Icon="@Icons.Material.Filled.Delete" Edge="Edge.End" Color="Color.Error" Size="Size.Large" />
+<MudSpacer />
+<MudTextField @bind-Value="searchString" Variant="Variant.Outlined" Placeholder="Pesquisar" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium"
+              Class="width: 250px justify-end" />
 
 @code {
     [Parameter]
-    public EventCallback<bool> MostrarModalChanged { get; set; }
+    public MudTable<PessoaGetDTO> mudTable { get; set; } = new();
 
-    private void AbrirModal()
+    private string searchString = "";
+
+    private void EditPessoa(MudTable<PessoaGetDTO> mudTable)
     {
-        MostrarModalChanged.InvokeAsync(true);
+        if (mudTable.SelectedItem == null)
+        {
+            Snackbar.Add("Nenhum registro selecionado", Severity.Error);
+        }
+        else
+        {
+            DialogService.Show<FormPessoa>($"Editar pessoa - {mudTable.SelectedItem.SituacaoNome}", 
+                                          new DialogParameters { { "Pessoa", mudTable.SelectedItem }, { "PessoaId", mudTable.SelectedItem.Id } },
+                                          new DialogOptions {MaxWidth = MaxWidth.Medium, FullWidth = true});
+        }
     }
 }

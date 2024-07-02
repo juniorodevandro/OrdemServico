@@ -16,7 +16,7 @@ namespace OrdemServico.Api.Repository
 
         public async Task<IEnumerable<Ordem>> GetOrdem(int? codigo, string? numeroControle, string? cliente, string? tipo, int? situacao)
         {
-            return Enumerable.Empty<Ordem>();
+            return Enumerable.Empty<Ordem>(); 
         }
 
         public async Task<IEnumerable<Ordem>> GetOrdemServico(int? codigo, string? numeroControle, string? cliente, string? tipo, int? situacao)

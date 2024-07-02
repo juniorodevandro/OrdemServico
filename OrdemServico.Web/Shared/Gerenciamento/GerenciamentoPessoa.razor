@@ -1,0 +1,87 @@
+﻿@using System.Net.Http.Json
+@using OrdemServico.Web.Pages
+@inject IDialogService DialogService
+
+<style>
+    .selected {
+        background-color: #1E88E5 !important;
+    }
+
+    .selected > td {
+        color: white !important;
+     }
+
+    .selected > td .mud-input {
+        color: white !important;
+    }
+
+    .no-whitespace-table {
+        table-layout: fixed;
+        width: 100%; 
+        
+        td
+        {
+            white-space: nowrap;
+        }
+    }
+</style>
+
+
+<MudTable T="PessoaGetDTO" Items="@Pessoas" @ref="mudTable" Striped="true" Breakpoint="Breakpoint.None" Bordered="true" Class="no-whitespace-table" RowClassFunc="@SelectedRowClassFunc" OnRowClick="RowClickEvent">
+    <ToolBarContent>
+        <BotaoPessoa mudTable="@mudTable" />
+    </ToolBarContent>
+    <HeaderContent >
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<PessoaGetDTO, object>(x=>x.Codigo)">Código</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<PessoaGetDTO, object>(x=>x.Nome)">Nome</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<PessoaGetDTO, object>(x=>x.CpfCnpj)">CPF/CNPJ</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<PessoaGetDTO, object>(x=>x.Contato)">Contato</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<PessoaGetDTO, object>(x=>x.TipoNome)">Tipo</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<PessoaGetDTO, object>(x=>x.SituacaoNome)">Situação</MudTableSortLabel></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>@context.Codigo</MudTd>
+        <MudTd>@context.Nome</MudTd>
+        <MudTd>@context.CpfCnpj</MudTd>
+        <MudTd>@context.Contato</MudTd>
+        <MudTd>@context.TipoNome</MudTd>
+        <MudTd>@context.SituacaoNome</MudTd>
+    </RowTemplate>
+</MudTable>
+
+@code {
+
+    [Parameter]
+    public IEnumerable<PessoaGetDTO>? Pessoas { get; set; }
+
+    private PessoaGetDTO? Pessoa { get; set; }
+
+    private int selectedRowNumber = -1;
+
+    private MudTable<PessoaGetDTO> mudTable = new();
+
+
+    private void RowClickEvent(TableRowClickEventArgs<PessoaGetDTO> tableRowClickEventArgs)
+    {
+        //
+    }
+
+    private string SelectedRowClassFunc(PessoaGetDTO pessoa, int rowNumber)
+    {
+        if (selectedRowNumber == rowNumber)
+        {
+            selectedRowNumber = -1;
+            return string.Empty;
+        }
+        else if (mudTable.SelectedItem != null && mudTable.SelectedItem.Equals(pessoa))
+        {
+            selectedRowNumber = rowNumber;
+            return "selected";
+        }
+        else
+        {
+            return string.Empty;
+        }
+    }
+}
+    

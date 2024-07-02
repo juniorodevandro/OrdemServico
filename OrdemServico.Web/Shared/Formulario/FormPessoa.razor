@@ -1,0 +1,51 @@
+﻿@page "/FormPessoa"
+
+@inject IDialogService DialogService
+
+<MudDialog>
+    <DialogContent>
+        <MudGrid>
+            <MudItem md="6" sm="12">
+                <CustomTextField Label="Nome" @bind-Value="Pessoa.Nome"/> 
+            </MudItem>
+            <MudItem md="3" sm="12">
+                <CustomTextField Label="CPF/CNPJ" @bind-Value="Pessoa.CpfCnpj" ReadOnly="true" Mask="Pessoa.CpfCnpj.ToCpfCnpjMask()" />
+            </MudItem>
+            <MudItem md="3" sm="12">
+                <CustomTextField Label="Tipo" @bind-Value="Pessoa.TipoNome" ReadOnly="true" />
+            </MudItem>
+            <MudItem md="2" sm="12">
+                <CustomIntField Label="Código" @bind-Value="Pessoa.Codigo" ReadOnly="true" />
+            </MudItem>
+            <MudItem md="12" sm="12">
+                <CustomTextField Label="Contato" @bind-Value="Pessoa.Contato" Mask="Pessoa.CpfCnpj.ToPhoneMask()" />
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton Color="Color.Error" OnClick="Cancel">Fechar</MudButton>
+        <MudButton Color="Color.Success" OnClick="Save">Ok</MudButton>
+    </DialogActions>
+
+</MudDialog>
+
+
+@code {
+    [Parameter]
+    public PessoaGetDTO Pessoa { get; set; } = new PessoaGetDTO();
+
+    [Parameter]
+    public int PessoaId { get; set; }
+
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; } = new();
+
+    private void Save()
+    {
+        MudDialog.Close();
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+    
+}

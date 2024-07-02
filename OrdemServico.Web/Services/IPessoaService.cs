@@ -27,12 +27,7 @@ namespace OrdemServico.Web.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    if (response.StatusCode == HttpStatusCode.NoContent)
-                    {
-                        return Enumerable.Empty<PessoaGetDTO>();
-                    }
-
-                    return await response.Content.ReadFromJsonAsync<IEnumerable<PessoaGetDTO>>();
+                    return await response.Content.ReadFromJsonAsync<IEnumerable<PessoaGetDTO>>() ?? Enumerable.Empty<PessoaGetDTO>();
                 }
                 else
                 {

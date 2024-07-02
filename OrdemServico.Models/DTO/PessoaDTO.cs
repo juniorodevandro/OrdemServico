@@ -24,22 +24,26 @@ namespace OrdemServico.Models.DTO
 
     public class PessoaGetDTO
     {
+        [Key]
+        [JsonPropertyName("id")]
+        public int Id { get; set; }
+
         [JsonPropertyName("codigo")]
-        public required int Codigo { get; set; }
+        public int Codigo { get; set; }
 
         [JsonPropertyName("nome")]
-        public required string Nome { get; set; }
+        public string Nome { get; set; } = string.Empty;
 
         [JsonPropertyName("cpfCnpj")]
-        public required string CpfCnpj { get; set; }
+        public string CpfCnpj { get; set; } = string.Empty;
 
-        public string? Contato { get; set; }
+        public string Contato { get; set; } = string.Empty;
 
         [JsonPropertyName("tipo")]
-        public required string TipoNome { get; set; }
+        public string TipoNome { get; set; } = string.Empty;
 
         [JsonPropertyName("situacao")]
-        public required string SituacaoNome { get; set; }
+        public string SituacaoNome { get; set; } = string.Empty;
     }
 
     public class PessoaPostDTO

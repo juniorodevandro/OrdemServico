@@ -1,7 +1,7 @@
 ﻿@inject IDialogService DialogService
 @inject ISnackbar Snackbar
 
-<MudIconButton Icon="@Icons.Material.Filled.Add" Edge="Edge.End" Color="Color.Success" Size="Size.Large" />
+<MudIconButton Icon="@Icons.Material.Filled.Add" Edge="Edge.End" Color="Color.Success" Size="Size.Large" OnClick="@(() => AddPessoa(mudTable))" />
 <MudIconButton Icon="@Icons.Material.Filled.Edit" Edge="Edge.End" Color="Color.Warning" Size="Size.Large" OnClick="@(() => EditPessoa(mudTable))" />
 <MudIconButton Icon="@Icons.Material.Filled.Delete" Edge="Edge.End" Color="Color.Error" Size="Size.Large" />
 <MudSpacer />
@@ -23,8 +23,14 @@
         else
         {
             DialogService.Show<FormPessoa>($"Editar pessoa - {mudTable.SelectedItem.SituacaoNome}", 
-                                          new DialogParameters { { "Pessoa", mudTable.SelectedItem }, { "PessoaId", mudTable.SelectedItem.Id } },
+                                          new DialogParameters { { "Pessoa", mudTable.SelectedItem }, { "PessoaId", mudTable.SelectedItem.Id }, { "IsEditMode", true }  },
                                           new DialogOptions {MaxWidth = MaxWidth.Medium, FullWidth = true});
         }
+    }
+
+    private void AddPessoa(MudTable<PessoaGetDTO> mudTable)
+    {
+        DialogService.Show<FormPessoa>($"Adicionar pessoa",
+                                        new DialogOptions { MaxWidth = MaxWidth.Medium, FullWidth = true });
     }
 }

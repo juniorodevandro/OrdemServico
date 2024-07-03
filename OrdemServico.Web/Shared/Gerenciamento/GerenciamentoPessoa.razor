@@ -26,13 +26,12 @@
     }
 </style>
 
-
 <MudTable T="PessoaGetDTO" Items="@Pessoas" @ref="mudTable" Striped="true" Breakpoint="Breakpoint.None" Bordered="true" Class="no-whitespace-table" RowClassFunc="@SelectedRowClassFunc" OnRowClick="RowClickEvent">
     <ToolBarContent>
         <BotaoPessoa mudTable="@mudTable" />
     </ToolBarContent>
     <HeaderContent >
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<PessoaGetDTO, object>(x=>x.Codigo)">Código</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Descending" SortBy="new Func<PessoaGetDTO, object>(x=>x.Codigo)">Código</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel SortBy="new Func<PessoaGetDTO, object>(x=>x.Nome)">Nome</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel SortBy="new Func<PessoaGetDTO, object>(x=>x.CpfCnpj)">CPF/CNPJ</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel SortBy="new Func<PessoaGetDTO, object>(x=>x.Contato)">Contato</MudTableSortLabel></MudTh>

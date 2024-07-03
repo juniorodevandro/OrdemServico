@@ -1,5 +1,6 @@
 ﻿using OrdemServico.Models.DTO;
 using System.Net;
+using System.Net.Http;
 using System.Net.Http.Json;
 
 namespace OrdemServico.Web.Services
@@ -40,6 +41,37 @@ namespace OrdemServico.Web.Services
             {
                 _logger.LogError($"Erro {ex.Message}");
                 throw new Exception(($"Erro {ex.Message}"));
+            }
+        }
+
+        public async Task<PessoaGetDTO> AdicionarPessoa(PessoaPostDTO pessoa)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync<PessoaPostDTO>("api/Pessoa/cadastrar", pessoa);
+
+                if (response.IsSuccessStatusCode)// status code entre 200 a 299
+                {
+                    if (response.StatusCode == HttpStatusCode.NoContent)
+                    {
+                        // retorna o valor "padrão" ou vazio
+                        // para uma objeto do tipo carrinhoItemDto
+                        return default(PessoaGetDTO);
+                    }
+                    //le o conteudo HTTP e retorna o valor resultante
+                    //da serialização do conteudo JSON para o objeto Dto
+                    return await response.Content.ReadFromJsonAsync<PessoaGetDTO>();
+                }
+                else
+                {
+                    //serializa o conteudo HTTP como uma string
+                    var message = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"{response.StatusCode} Message -{message}");
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(($"Erro {e.Message}"));
             }
         }
     }
